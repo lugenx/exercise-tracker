@@ -79,8 +79,8 @@ app.get("/api/users/:_id/logs", async (req, res) => {
     user.log = log;
 
     res.send(user);
-  } catch (error) {
-    console.error("catched error", error);
+  } catch (err) {
+    res.status(400).json({ error: err });
   }
 });
 
