@@ -13,7 +13,6 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-// add user -done
 app.post("/api/users", async (req, res) => {
   const { username } = req.body;
   try {
@@ -27,7 +26,6 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
-// add exercises -done
 app.post("/api/users/:_id/exercises", async (req, res) => {
   const id = req.params._id;
   const exercise = {
@@ -37,7 +35,6 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
   };
 
   try {
-    console.log(exercise);
     const user = await User.findOneAndUpdate(
       {
         _id: id,
@@ -46,9 +43,6 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
         $push: {
           log: exercise,
         },
-        // $set: {
-        //   count: {$size: "$log"}
-        // },
       },
       { new: true }
     );
@@ -61,12 +55,11 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
 
 app.get("/api/users/:_id/logs", async (req, res) => {
   const id = mongoose.Types.ObjectId(req.params._id);
-  // const {from, to, limit} = req.query;
   const from = new Date(req.query.from);
   const to = new Date(req.query.to);
 
   const limit = req.query.limit;
-  //find a way to limit data inside an array
+
   try {
     const user = await User.findOne({
       _id: id,
@@ -87,7 +80,7 @@ app.get("/api/users/:_id/logs", async (req, res) => {
 
     res.send(user);
   } catch (error) {
-    console.log("catched error", error);
+    console.error("catched error", error);
   }
 });
 
@@ -99,7 +92,7 @@ const startServer = async () => {
       console.log("Your app is listening on port " + listener.address().port);
     });
   } catch (err) {
-    console.log({ error: err });
+    console.error({ error: err });
   }
 };
 
