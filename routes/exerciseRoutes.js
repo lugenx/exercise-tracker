@@ -23,18 +23,12 @@ exerciseRouter.post("/:_id/exercises", async (req, res) => {
       },
       { new: true }
     );
+    const lastAddedExercise = user.log[user.log.length - 1];
+    lastAddedExercise.date = lastAddedExercise.date.toDateString();
 
-    const log = user.log.map((elem) => {
-      return {
-        description: elem.description,
-        duration: elem.duration,
-        date: elem.date.toDateString(),
-      };
-    });
-
-    user.log = log;
-
-    res.status(200).json(user);
+    res
+      .status(200)
+      .json({ username: user.username, ...lastAddedExercise, _id: user._id });
   } catch (err) {
     res.status(400).json({ error: err });
   }
