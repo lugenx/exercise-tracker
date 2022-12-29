@@ -41,7 +41,6 @@ app.get("/api/users", async (req, res) => {
 
 // You can POST to /api/users/:_id/exercises with form data description, duration, and optionally date. If no date is supplied, the current date will be used.
 // The response returned from POST /api/users/:_id/exercises will be the user object with the exercise fields added.
-
 app.post("/api/users/:_id/exercises", async (req, res) => {
   const id = req.params._id;
   const exercise = {
@@ -62,6 +61,18 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
       },
       { new: true }
     );
+
+    //
+    const log = user.log.map((elem) => {
+      return {
+        description: elem.description,
+        duration: elem.duration,
+        date: elem.date.toDateString(),
+      };
+    });
+
+    user.log = log;
+    //
 
     res.status(200).json(user);
   } catch (err) {
