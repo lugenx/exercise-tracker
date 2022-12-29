@@ -26,6 +26,14 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
+app.get("/api/users", async (req, res) => {
+  const user = await User.find({});
+  const userOnly = user.map((elem) => {
+    return { _id: elem._id, username: elem.username };
+  });
+  res.status(200).json(userOnly);
+});
+
 app.post("/api/users/:_id/exercises", async (req, res) => {
   const id = req.params._id;
   const exercise = {
