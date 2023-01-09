@@ -6,9 +6,9 @@ const User = require("../models/userModel");
 exerciseRouter.post("/:_id/exercises", async (req, res) => {
   const id = req.params._id;
   const exercise = {
-    description: req.body.description,
-    duration: req.body.duration,
     date: new Date(req.body.date),
+    duration: req.body.duration,
+    description: req.body.description,
   };
 
   try {
@@ -26,9 +26,11 @@ exerciseRouter.post("/:_id/exercises", async (req, res) => {
     const lastAddedExercise = user.log[user.log.length - 1];
     lastAddedExercise.date = lastAddedExercise.date.toDateString();
 
-    res
-      .status(200)
-      .json({ username: user.username, ...lastAddedExercise, _id: user._id });
+    res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      ...lastAddedExercise,
+    });
   } catch (err) {
     res.status(400).json({ error: err });
   }
