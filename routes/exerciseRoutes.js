@@ -7,7 +7,7 @@ exerciseRouter.post("/:_id/exercises", async (req, res) => {
   const id = req.params._id;
   const exercise = {
     date: new Date(req.body.date),
-    duration: req.body.duration,
+    duration: Number(req.body.duration),
     description: req.body.description,
   };
 
