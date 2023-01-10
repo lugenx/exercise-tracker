@@ -35,9 +35,7 @@ logRouter.get("/:_id/logs", async (req, res) => {
             date: elem.date.toDateString(),
           };
         });
-      console.log("inside if");
     } else {
-      console.log("inside else");
       userLog = user.log.map((elem) => {
         return {
           description: elem.description ? elem.description : "",
