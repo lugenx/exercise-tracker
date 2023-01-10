@@ -37,8 +37,8 @@ logRouter.get("/:_id/logs", async (req, res) => {
         .slice(0, limit)
         .map((elem) => {
           return {
-            description: elem.description.toString(),
-            duration: elem.duration,
+            description: elem.description ? elem.description : "",
+            duration: elem.duration ? elem.duration : 0,
             date: elem.date.toDateString(),
           };
         });
