@@ -1,0 +1,62 @@
+{
+  "_id": "63bccf58f501a2adb1155fd0",
+  "username": "user-number-one",
+  "__parentArray": [
+    {
+      "duration": 10,
+      "date": "1999-10-09T04:00:00.000Z",
+      "description": "push ups",
+      "_id": "63bccf7af501a2adb1155fd2"
+    }
+  ],
+  "__index": 0,
+  "$__parent": {
+    "_id": "63bccf58f501a2adb1155fd0",
+    "username": "user-number-one",
+    "log": [
+      {
+        "duration": 10,
+        "date": "1999-10-09T04:00:00.000Z",
+        "description": "push ups",
+        "_id": "63bccf7af501a2adb1155fd2"
+      }
+    ],
+    "__v": 0
+  },
+  "$__": {
+    "activePaths": {
+      "paths": {
+        "_id": "init",
+        "duration": "init",
+        "date": "modify",
+        "description": "init"
+      },
+      "states": {
+        "default": {},
+        "init": { "duration": true, "description": true, "_id": true },
+        "modify": { "date": true }
+      }
+    },
+    "fullPath": "log",
+    "ownerDocument": {
+      "_id": "63bccf58f501a2adb1155fd0",
+      "username": "user-number-one",
+      "log": [
+        {
+          "duration": 10,
+          "date": "1999-10-09T04:00:00.000Z",
+          "description": "push ups",
+          "_id": "63bccf7af501a2adb1155fd2"
+        }
+      ],
+      "__v": 0
+    }
+  },
+  "_doc": {
+    "duration": 10,
+    "date": "1999-10-09T04:00:00.000Z",
+    "description": "push ups",
+    "_id": "63bccf7af501a2adb1155fd2"
+  },
+  "$isNew": false
+}
