@@ -14,11 +14,12 @@ logRouter.get("/:_id/logs", async (req, res) => {
   const id = mongoose.Types.ObjectId(req.params._id);
   const from = new Date(req.query.from);
   const to = new Date(req.query.to);
-
-  // console.log("id", id);
-  // console.log("from", from);
-  // console.log("to", to);
   const limit = req.query.limit;
+
+  console.log("id", id);
+  console.log("from", from);
+  console.log("to", to);
+  console.log("limit", limit);
 
   try {
     const user = await User.findOne({
@@ -26,23 +27,25 @@ logRouter.get("/:_id/logs", async (req, res) => {
     });
 
     user.count = user.log.length;
-    log = user.log;
+
+    userLog = user.log;
     const withQueries = !isNaN(Date.parse(from));
+
     if (withQueries) {
-      log = log
+      userLog = userLog
         .filter((elem) => elem.date >= from && elem.date <= to)
         .slice(0, limit);
     }
 
-    log = log.map((elem) => {
+    userLog = userLog.map((elem) => {
       return {
-        description: elem.description,
+        description: elem.description.toString(),
         duration: elem.duration,
         date: elem.date.toDateString(),
       };
     });
 
-    user.log = log;
+    user.log = userLog;
 
     res.send(user);
   } catch (err) {
