@@ -15,24 +15,32 @@ logRouter.get("/:_id/logs", async (req, res) => {
   const from = new Date(req.query.from);
   const to = new Date(req.query.to);
 
+  // console.log("id", id);
+  // console.log("from", from);
+  // console.log("to", to);
   const limit = req.query.limit;
+
   try {
     const user = await User.findOne({
       _id: id,
     });
-    user.count = user.log.length;
-    if (isNaN(Date.parse(from))) return res.send(user);
 
-    const log = user.log
-      .filter((elem) => elem.date >= from && elem.date <= to)
-      .map((elem) => {
-        return {
-          description: elem.description,
-          duration: elem.duration,
-          date: elem.date.toDateString(),
-        };
-      })
-      .slice(0, limit);
+    user.count = user.log.length;
+    log = user.log;
+    const withQueries = !isNaN(Date.parse(from));
+    if (withQueries) {
+      log = log
+        .filter((elem) => elem.date >= from && elem.date <= to)
+        .slice(0, limit);
+    }
+
+    log = log.map((elem) => {
+      return {
+        description: elem.description,
+        duration: elem.duration,
+        date: elem.date.toDateString(),
+      };
+    });
 
     user.log = log;
 
