@@ -51,7 +51,7 @@ logRouter.get("/:_id/logs", async (req, res) => {
     });
     user.log = userLog;
 
-    res.send(user);
+    res.status(200).json(user);
   } catch (err) {
     res.status(400).json({ error: err });
   }
