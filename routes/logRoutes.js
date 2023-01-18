@@ -46,7 +46,10 @@ logRouter.get("/:_id/logs", async (req, res) => {
       return {
         description: elem.description ? elem.description : "",
         duration: elem.duration ? elem.duration : 0,
-        date: elem.date ? elem.date.toDateString() : new Date().toDateString(),
+        date:
+          !elem.date === "" && !elem.date === undefined
+            ? elem.date.toDateString()
+            : new Date().toDateString(),
       };
     });
     user.log = userLog;
