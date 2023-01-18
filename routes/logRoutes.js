@@ -38,6 +38,8 @@ logRouter.get("/:_id/logs", async (req, res) => {
       filteredUserLog = user.log
         .filter((elem) => elem.date <= new Date(to))
         .slice(0, responseLogLength);
+    } else {
+      filteredUserLog = user.log;
     }
 
     userLog = filteredUserLog.map((elem) => {
