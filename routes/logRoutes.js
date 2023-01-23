@@ -5,16 +5,11 @@ const User = require("../models/userModel");
 
 logRouter.get("/:_id/logs", async (req, res) => {
   const id = mongoose.Types.ObjectId(req.params._id);
-  // const from = new Date(req.query.from);
-  // const to = new Date(req.query.to);
 
   const from = req.query.from;
   const to = req.query.to;
   const limit = req.query.limit;
 
-  console.log("from: ", from);
-  console.log("to: ", to);
-  console.log("limit: ", limit);
   try {
     const user = await User.findOne({
       _id: id,
@@ -39,7 +34,7 @@ logRouter.get("/:_id/logs", async (req, res) => {
         .filter((elem) => elem.date <= new Date(to))
         .slice(0, responseLogLength);
     } else {
-      filteredUserLog = user.log;
+      filteredUserLog = user.log.slice(0, responseLogLength);
     }
 
     userLog = filteredUserLog.map((elem) => {
@@ -47,7 +42,7 @@ logRouter.get("/:_id/logs", async (req, res) => {
         description: elem.description ? elem.description : "",
         duration: elem.duration ? elem.duration : 0,
         date:
-          !elem.date === "" && !elem.date === undefined
+          elem.date !== "" && elem.date !== undefined
             ? elem.date.toDateString()
             : new Date().toDateString(),
       };
