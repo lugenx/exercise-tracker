@@ -10,6 +10,10 @@ logRouter.get("/:_id/logs", async (req, res) => {
   const to = req.query.to;
   const limit = req.query.limit;
 
+  console.log("from is: ", from);
+  console.log("to is: ", to);
+  console.log("limit is: ", limit);
+
   try {
     const user = await User.findOne({
       _id: id,
@@ -48,7 +52,7 @@ logRouter.get("/:_id/logs", async (req, res) => {
       };
     });
     user.log = userLog;
-
+    console.log("Responded user is: ", user);
     res.status(200).json(user);
   } catch (err) {
     res.status(400).json({ error: err });
