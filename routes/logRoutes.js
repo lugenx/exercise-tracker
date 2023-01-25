@@ -10,10 +10,6 @@ logRouter.get("/:_id/logs", async (req, res) => {
   const to = req.query.to;
   const limit = req.query.limit;
 
-  console.log("from is: ", from);
-  console.log("to is: ", to);
-  console.log("limit is: ", limit);
-
   try {
     const user = await User.findOne({
       _id: id,
@@ -26,16 +22,18 @@ logRouter.get("/:_id/logs", async (req, res) => {
     if (from && to) {
       filteredUserLog = user.log
         .filter(
-          (elem) => elem.date >= new Date(from) && elem.date <= new Date(to)
+          (elem) =>
+            Date.parse(elem.date) >= Date.parse(from) &&
+            Date.parse(elem.date) <= Date.parse(to)
         )
         .slice(0, responseLogLength);
     } else if (from) {
       filteredUserLog = user.log
-        .filter((elem) => elem.date >= new Date(from))
+        .filter((elem) => Date.parse(elem.date) >= Date.parse(from))
         .slice(0, responseLogLength);
     } else if (to) {
       filteredUserLog = user.log
-        .filter((elem) => elem.date <= new Date(to))
+        .filter((elem) => Date.parse(elem.date) <= Date.parse(to))
         .slice(0, responseLogLength);
     } else {
       filteredUserLog = user.log.slice(0, responseLogLength);
@@ -46,13 +44,13 @@ logRouter.get("/:_id/logs", async (req, res) => {
         description: elem.description ? elem.description : "",
         duration: elem.duration ? elem.duration : 0,
         date:
-          elem.date !== "" && elem.date !== undefined
+          elem.date && isNaN(Date.parse(elem.date))
             ? elem.date.toDateString()
             : new Date().toDateString(),
       };
     });
     user.log = userLog;
-    console.log("Responded user is: ", user);
+
     res.status(200).json(user);
   } catch (err) {
     res.status(400).json({ error: err });
