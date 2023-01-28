@@ -1,8 +1,7 @@
 const express = require("express");
 const exerciseRouter = express.Router();
 const User = require("../models/userModel");
-// You can POST to /api/users/:_id/exercises with form data description, duration, and optionally date. If no date is supplied, the current date will be used.
-// The response returned from POST /api/users/:_id/exercises will be the user object with the exercise fields added.
+
 exerciseRouter.post("/:_id/exercises", async (req, res) => {
   const id = req.params._id;
   const exercise = {

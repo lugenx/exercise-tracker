@@ -1,8 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 const User = require("../models/userModel");
-// You can POST to /api/users with form data username to create a new user.
-// The returned response from POST /api/users with form data username will be an object with username and _id properties.
+
 userRouter.post("/", async (req, res) => {
   const { username } = req.body;
   try {
@@ -16,9 +15,6 @@ userRouter.post("/", async (req, res) => {
   }
 });
 
-// You can make a GET request to /api/users to get a list of all users.
-// The GET request to /api/users returns an array.
-// Each element in the array returned from GET /api/users is an object literal containing a user's username and _id.
 userRouter.get("/", async (req, res) => {
   const user = await User.find({});
   const userOnly = user.map((elem) => {
